@@ -1,38 +1,202 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Green Clock</title>
-  <style>
-    body {
-      background-color: green;
-      color: white;
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KEHS - Live Clock</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    #clock {
-      font-size: 4rem;
-    }
-  </style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 600px;
+            width: 90%;
+        }
+
+        .logo-container {
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1rem;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .school-name {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .school-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .clock-container {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 1rem;
+        }
+
+        .time-display {
+            font-size: 3.5rem;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+        }
+
+        .date-display {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .timezone {
+            font-size: 1rem;
+            opacity: 0.8;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .school-name {
+                font-size: 2rem;
+            }
+            
+            .time-display {
+                font-size: 2.5rem;
+            }
+            
+            .container {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .school-name {
+                font-size: 1.5rem;
+            }
+            
+            .time-display {
+                font-size: 2rem;
+                letter-spacing: 1px;
+            }
+            
+            .logo {
+                width: 100px;
+                height: 100px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div id="clock">00:00:00</div>
+    <div class="container">
+        <div class="logo-container">
+            <div class="logo">
+                <!-- KEHS School Logo SVG -->
+                <svg width="80" height="80" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Shield background -->
+                    <path d="M50 5 L85 20 L85 50 Q85 75 50 95 Q15 75 15 50 L15 20 Z" 
+                          fill="#1e40af" stroke="#1e3a8a" stroke-width="2"/>
+                    
+                    <!-- Letter K -->
+                    <path d="M25 25 L25 75 M25 50 L45 25 M25 50 L45 75" 
+                          stroke="white" stroke-width="4" stroke-linecap="round" fill="none"/>
+                    
+                    <!-- Letter E -->
+                    <path d="M55 25 L55 75 M55 25 L75 25 M55 50 L70 50 M55 75 L75 75" 
+                          stroke="white" stroke-width="3" stroke-linecap="round" fill="none"/>
+                    
+                    <!-- Decorative elements -->
+                    <circle cx="50" cy="15" r="2" fill="gold"/>
+                    <circle cx="35" cy="85" r="1.5" fill="gold"/>
+                    <circle cx="65" cy="85" r="1.5" fill="gold"/>
+                </svg>
+            </div>
+            <h1 class="school-name">KEHS</h1>
+            <p class="school-subtitle">Knowledge • Excellence • Honor • Service</p>
+        </div>
 
-  <script>
-    function updateClock() {
-      const now = new Date();
-      const hours = String(now.getHours()).padStart(2, '0');
-      const minutes = String(now.getMinutes()).padStart(2, '0');
-      const seconds = String(now.getSeconds()).padStart(2, '0');
-      document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
-    }
+        <div class="clock-container">
+            <div class="time-display" id="time">00:00:00</div>
+            <div class="date-display" id="date">Loading...</div>
+            <div class="timezone" id="timezone">Local Time</div>
+        </div>
+    </div>
 
-    setInterval(updateClock, 1000);
-    updateClock(); // Initial call to display clock immediately
-  </script>
-</body>
+    <script>
+        function updateClock() {
+            const now = new Date();
+            
+            // Format time
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            const timeString = `${hours}:${minutes}:${seconds}`;
+            
+            // Format date
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            const dateString = now.toLocaleDateString('en-US', options);
+            
+            // Get timezone
+            const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            
+            // Update display
+            document.getElementById('time').textContent = timeString;
+            document.getElementById('date').textContent = dateString;
+            document.getElementById('timezone').textContent = timezone;
+        }
+
+        // Update clock immediately and then every second
+        updateClock();
+        setInterval(updateClock, 1000);
+
+        // Add a subtle animation to the clock
+        setInterval(() => {
+            const timeElement = document.getElementById('time');
+            timeElement.style.transform = 'scale(1.02)';
+            setTimeout(() => {
+                timeElement.style.transform = 'scale(1)';
+            }, 100);
+        }, 1000);
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96b5dcf160fd54c9',t:'MTc1NDU2MDE1Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
