@@ -1,0 +1,19 @@
+# _config.yml
+
+title: "" # No title
+description: "" # Optional: leave empty
+baseurl: "" # Leave empty unless using a project page
+url: "https://kingedstech.github.io" # Replace with your GitHub Pages URL
+theme: minima
+
+markdown: kramdown
+highlighter: rouge
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
