@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HDMI Display Page</title>
+    <title>KEHS Reception</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
@@ -34,32 +34,32 @@
 </head>
 <body class="bg-gradient-to-br from-slate-900 via-green-900 to-slate-800 min-h-screen">
     <!-- Header with Logo and Clock -->
-    <header class="flex justify-between items-center p-6 lg:p-8">
+    <header class="flex justify-between items-center p-4 lg:p-6">
         <!-- Logo -->
         <div class="flex items-center">
             <img src="https://kehs.org.uk/wp-content/uploads/2023/03/KEHS-Logo-Landscape-white-CMYK-1.png" 
                  alt="King Edward VI High School for Girls" 
-                 class="h-12 lg:h-20 w-auto object-contain">
+                 class="h-8 lg:h-12 w-auto object-contain">
         </div>
         
         <!-- Welcome Text - Centered -->
         <div class="absolute left-1/2 transform -translate-x-1/2 text-white text-center">
-            <h1 class="text-4xl lg:text-6xl font-bold">Welcome</h1>
+            <h1 class="text-3xl lg:text-4xl font-bold">Welcome</h1>
         </div>
         
         <!-- Digital Clock -->
         <div class="text-right text-white">
-            <div id="clock" class="clock text-2xl lg:text-4xl font-bold text-green-100"></div>
-            <div id="date" class="text-sm lg:text-base text-green-200 opacity-80 mt-1"></div>
+            <div id="clock" class="clock text-xl lg:text-2xl font-bold text-green-100"></div>
+            <div id="date" class="text-xs lg:text-sm text-green-200 opacity-80 mt-1"></div>
         </div>
     </header>
     
     <!-- Main Content Area -->
-    <main class="px-6 lg:px-8 pb-6 lg:pb-8">
-        <div class="max-w-7xl mx-auto">
+    <main class="px-4 lg:px-6 pb-4 lg:pb-6">
+        <div class="max-w-6xl mx-auto">
             <!-- Iframe Container -->
-            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-4 lg:p-6 shadow-2xl border border-white/20">
-                <div class="iframe-container" style="height: calc(100vh - 200px); min-height: 400px;">
+            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-3 lg:p-4 shadow-2xl border border-white/20">
+                <div class="iframe-container" style="height: calc(100vh - 180px); min-height: 300px;">
                     <!-- Placeholder content - replace src with your iframe URL -->
                     <div class="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl flex items-center justify-center">
                         <div class="text-center text-gray-600">
@@ -83,9 +83,9 @@
             </div>
             
             <!-- Visitor Sign-in Message -->
-            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 lg:p-8 shadow-2xl border border-white/20 mt-6">
+            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-4 lg:p-5 shadow-2xl border border-white/20 mt-4">
                 <div class="text-center text-white">
-                    <h2 class="text-xl lg:text-2xl font-semibold text-green-100">Please could visitors sign in on the touch screen</h2>
+                    <h2 class="text-lg lg:text-xl font-semibold text-green-100">Please could visitors sign in on the touch screen</h2>
                 </div>
             </div>
         </div>
@@ -139,5 +139,5 @@
         window.addEventListener('load', adjustIframeHeight);
         window.addEventListener('resize', adjustIframeHeight);
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96bf5d37960fcd49',t:'MTc1NDY1OTc4Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96bf6135b255cd49',t:'MTc1NDY1OTk0Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
