@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HDMI Display Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .clock {
+            font-variant-numeric: tabular-nums;
+        }
+        
+        .iframe-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+        
+        .iframe-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 1rem;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-green-900 to-slate-800 min-h-screen">
+    <!-- Header with Logo and Clock -->
+    <header class="flex justify-between items-center p-6 lg:p-8">
+        <!-- Logo -->
+        <div class="flex items-center">
+            <img src="https://kehs.org.uk/wp-content/uploads/2023/03/KEHS-Logo-Landscape-white-CMYK-1.png" 
+                 alt="King Edward VI High School for Girls" 
+                 class="h-12 lg:h-20 w-auto object-contain">
+        </div>
+        
+        <!-- Welcome Text - Centered -->
+        <div class="absolute left-1/2 transform -translate-x-1/2 text-white text-center">
+            <h1 class="text-4xl lg:text-6xl font-bold">Welcome</h1>
+        </div>
+        
+        <!-- Digital Clock -->
+        <div class="text-right text-white">
+            <div id="clock" class="clock text-2xl lg:text-4xl font-bold text-green-100"></div>
+            <div id="date" class="text-sm lg:text-base text-green-200 opacity-80 mt-1"></div>
+        </div>
+    </header>
+    
+    <!-- Main Content Area -->
+    <main class="px-6 lg:px-8 pb-6 lg:pb-8">
+        <div class="max-w-7xl mx-auto">
+            <!-- Iframe Container -->
+            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-4 lg:p-6 shadow-2xl border border-white/20">
+                <div class="iframe-container" style="height: calc(100vh - 200px); min-height: 400px;">
+                    <!-- Placeholder content - replace src with your iframe URL -->
+                    <div class="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl flex items-center justify-center">
+                        <div class="text-center text-gray-600">
+                            <div class="w-16 h-16 mx-auto mb-4 bg-gray-300 rounded-full flex items-center justify-center">
+                                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-semibold mb-2">Iframe Content Area</h3>
+                            <p class="text-sm text-gray-500 max-w-md">Replace this placeholder with your iframe element.<br>
+                            Example: &lt;iframe src="your-url-here"&gt;&lt;/iframe&gt;</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Uncomment and modify this iframe element with your URL -->
+                    <!-- <iframe src="https://your-external-site.com" 
+                             title="External Content"
+                             allowfullscreen>
+                    </iframe> -->
+                </div>
+            </div>
+            
+            <!-- Visitor Sign-in Message -->
+            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 lg:p-8 shadow-2xl border border-white/20 mt-6">
+                <div class="text-center text-white">
+                    <h2 class="text-xl lg:text-2xl font-semibold text-green-100">Please could visitors sign in on the touch screen</h2>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        // Digital Clock Function
+        function updateClock() {
+            const now = new Date();
+            
+            // Format time
+            const timeOptions = {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            };
+            const timeString = now.toLocaleTimeString('en-US', timeOptions);
+            
+            // Format date
+            const dateOptions = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            };
+            const dateString = now.toLocaleDateString('en-US', dateOptions);
+            
+            // Update DOM
+            document.getElementById('clock').textContent = timeString;
+            document.getElementById('date').textContent = dateString;
+        }
+        
+        // Update clock immediately and then every second
+        updateClock();
+        setInterval(updateClock, 1000);
+        
+        // Handle responsive iframe sizing
+        function adjustIframeHeight() {
+            const container = document.querySelector('.iframe-container');
+            const headerHeight = document.querySelector('header').offsetHeight;
+            const padding = 100; // Account for padding and margins
+            const availableHeight = window.innerHeight - headerHeight - padding;
+            
+            if (availableHeight > 400) {
+                container.style.height = availableHeight + 'px';
+            }
+        }
+        
+        // Adjust on load and resize
+        window.addEventListener('load', adjustIframeHeight);
+        window.addEventListener('resize', adjustIframeHeight);
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96bf5d37960fcd49',t:'MTc1NDY1OTc4Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
