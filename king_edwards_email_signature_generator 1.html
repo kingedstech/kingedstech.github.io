@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>King Edward's Independent Schools Email Signature Generator</title>
+  <style>
+    :root {
+      --navy: #17243d;
+      --navy-2: #243654;
+      --peach: #e0a78c;
+      --cream: #f7f4ef;
+      --white: #ffffff;
+      --text: #18202b;
+      --muted: #5e6877;
+      --border: #d9dee7;
+      --success: #18794e;
+      --danger: #b42318;
+      --shadow: 0 12px 30px rgba(23, 36, 61, 0.11);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.5;
+    }
+
+    header {
+      background: var(--navy);
+      color: var(--white);
+      padding: 30px 20px;
+      border-bottom: 5px solid var(--peach);
+    }
+
+    header .inner, main { max-width: 1180px; margin: 0 auto; }
+    header h1 { margin: 0 0 6px; font-size: clamp(24px, 4vw, 38px); line-height: 1.2; }
+    header p { margin: 0; color: #dfe6f1; }
+
+    main {
+      padding: 28px 18px 42px;
+      display: grid;
+      grid-template-columns: minmax(320px, 0.9fr) minmax(440px, 1.1fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .card-heading {
+      padding: 18px 22px;
+      background: #f9fafc;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .card-heading h2 { margin: 0; font-size: 20px; color: var(--navy); }
+    .card-body { padding: 22px; }
+
+    .instructions {
+      margin-bottom: 20px;
+      padding: 16px 18px;
+      background: #fff8f3;
+      border-left: 5px solid var(--peach);
+      border-radius: 8px;
+    }
+
+    .instructions h2 { margin: 0 0 8px; font-size: 18px; color: var(--navy); }
+    .instructions-text { margin: 0; white-space: pre-line; }
+    .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .field.full { grid-column: 1 / -1; }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid #aeb8c7;
+      border-radius: 7px;
+      background: var(--white);
+      color: var(--text);
+      font: inherit;
+      padding: 10px 11px;
+    }
+
+    textarea { min-height: 110px; resize: vertical; }
+    input:focus, select:focus, textarea:focus {
+      outline: 3px solid rgba(224, 167, 140, 0.35);
+      border-color: #a85f3d;
+    }
+
+    .hint { margin: 5px 0 0; color: var(--muted); font-size: 12px; }
+    .required::after { content: " *"; color: var(--danger); }
+
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+
+    button {
+      appearance: none;
+      border: 0;
+      border-radius: 7px;
+      padding: 11px 16px;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .primary { background: var(--navy); color: var(--white); }
+    .primary:hover { background: var(--navy-2); }
+    .secondary { background: #e9edf3; color: var(--navy); }
+    .copy { background: var(--peach); color: #25160f; }
+    button:focus { outline: 3px solid rgba(36, 54, 84, 0.28); outline-offset: 2px; }
+
+    .status { min-height: 24px; margin: 12px 0 0; font-weight: 700; color: var(--success); }
+    .status.error { color: var(--danger); }
+
+    .preview-wrap {
+      min-height: 360px;
+      padding: 24px;
+      overflow-x: auto;
+      background-color: #fff;
+      background-image:
+        linear-gradient(45deg, #f3f3f3 25%, transparent 25%),
+        linear-gradient(-45deg, #f3f3f3 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #f3f3f3 75%),
+        linear-gradient(-45deg, transparent 75%, #f3f3f3 75%);
+      background-size: 18px 18px;
+      background-position: 0 0, 0 9px, 9px -9px, -9px 0;
+    }
+
+    #signaturePreview {
+      display: inline-block;
+      min-width: 560px;
+      padding: 26px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .preview-help { margin: 0; padding: 15px 22px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--border); }
+
+    @media (max-width: 900px) {
+      main { grid-template-columns: 1fr; }
+      #signaturePreview { min-width: 520px; }
+    }
+
+    @media (max-width: 560px) {
+      .field-grid { grid-template-columns: 1fr; }
+      .field.full { grid-column: auto; }
+      .card-body { padding: 17px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="inner">
+      <h1>King Edward's Independent Schools Email Signature Generator</h1>
+      <p>Enter your details, generate the signature, then copy it into Outlook on the web.</p>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <div class="instructions" aria-labelledby="instructionsHeading">
+        <h2 id="instructionsHeading">Instructions for staff</h2>
+        <p id="instructionsDisplay" class="instructions-text">1. Complete your details below.
+2. Select your school to load the correct default telephone number and address.
+3. Select Generate signature to check the preview.
+4. Select Copy signature, then paste it into your Outlook signature settings.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-heading"><h2>Your details</h2></div>
+        <div class="card-body">
+          <form id="signatureForm">
+            <div class="field-grid">
+              <div class="field">
+                <label class="required" for="firstName">First name</label>
+                <input id="firstName" name="firstName" value="David" required autocomplete="given-name">
+              </div>
+              <div class="field">
+                <label class="required" for="lastName">Last name</label>
+                <input id="lastName" name="lastName" value="Wilson" required autocomplete="family-name">
+              </div>
+              <div class="field full">
+                <label class="required" for="jobTitle">Job title</label>
+                <input id="jobTitle" name="jobTitle" value="Director of IT" required autocomplete="organization-title">
+              </div>
+              <div class="field full">
+                <label class="required" for="school">School</label>
+                <select id="school" name="school" required>
+                  <option value="KES">KES</option>
+                  <option value="KEHS">KEHS</option>
+                  <option value="Joint" selected>Joint</option>
+                </select>
+              </div>
+              <div class="field">
+                <label class="required" for="landline">Landline number</label>
+                <input id="landline" name="landline" value="0121 472 1672" required autocomplete="tel">
+                <p class="hint">A default is applied from the school selection, but you can edit it.</p>
+              </div>
+              <div class="field">
+                <label for="mobile">Mobile phone</label>
+                <input id="mobile" name="mobile" value="07492873248" autocomplete="tel">
+                <p class="hint">Optional. Leave blank to omit it.</p>
+              </div>
+              <div class="field full">
+                <label class="required" for="email">Email address</label>
+                <input id="email" name="email" type="email" value="d.wilson@kehs.org.uk" required autocomplete="email">
+              </div>
+              <div class="field full">
+                <label class="required" for="address">Address</label>
+                <input id="address" name="address" value="Edgbaston Park Road, Birmingham, B15 2UA" required autocomplete="street-address">
+                <p class="hint">A default is applied from the school selection, but you can edit it.</p>
+              </div>
+            </div>
+            <div class="actions">
+              <button type="submit" class="primary">Generate signature</button>
+              <button type="button" class="copy" id="copySignature">Copy signature</button>
+              <button type="reset" class="secondary" id="resetForm">Reset</button>
+            </div>
+            <p id="status" class="status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="previewHeading">
+      <div class="card-heading"><h2 id="previewHeading">Signature preview</h2></div>
+      <div class="preview-wrap">
+        <div id="signaturePreview"></div>
+      </div>
+      <p class="preview-help">After copying, in Outlook on the web go to <strong>Settings &gt; Accounts &gt; Signatures</strong>, create or edit a signature, and paste into the signature box.</p>
+    </section>
+  </main>
+
+  <script>
+    const LOGO_URL = 'https://github.com/kingedstech/kingedstech.github.io/blob/main/KEIS%20Logo%20(vertical,%20white).png?raw=true';
+    const WEBSITE_URL = 'https://keschools.org.uk';
+
+    const schoolSettings = {
+      KES: {
+        landline: '0121 472 1672',
+        address: 'Edgbaston Park Road, Birmingham, B15 2UA',
+        schoolLine: "King Edward's School"
+      },
+      KEHS: {
+        landline: '0121 472 1834',
+        address: 'Edgbaston Park Road, Birmingham, B15 2UB',
+        schoolLine: 'King Edward VI High School for Girls'
+      },
+      Joint: {
+        landline: '0121 472 1672',
+        address: 'Edgbaston Park Road, Birmingham, B15 2UA',
+        schoolLine: "King Edward's School and King Edward VI High School for Girls"
+      }
+    };
+
+    const form = document.getElementById('signatureForm');
+    const school = document.getElementById('school');
+    const landline = document.getElementById('landline');
+    const address = document.getElementById('address');
+    const preview = document.getElementById('signaturePreview');
+    const statusMessage = document.getElementById('status');
+
+    function escapeHtml(value) {
+      return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function telHref(value) {
+      return String(value || '').replace(/[^+\d]/g, '');
+    }
+
+    function readForm() {
+      return {
+        firstName: document.getElementById('firstName').value.trim(),
+        lastName: document.getElementById('lastName').value.trim(),
+        jobTitle: document.getElementById('jobTitle').value.trim(),
+        school: school.value,
+        landline: landline.value.trim(),
+        mobile: document.getElementById('mobile').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        address: address.value.trim()
+      };
+    }
+
+    function contactRow(symbol, content) {
+      return `
+        <tr style="vertical-align:middle;height:28px;">
+          <td width="28" style="vertical-align:middle;padding:0;">
+            <span style="display:inline-block;width:18px;height:18px;line-height:18px;text-align:center;border-radius:3px;background-color:#e0a78c;color:#17243d;font-size:12px;font-family:Arial,sans-serif;font-weight:bold;">${symbol}</span>
+          </td>
+          <td style="padding:0;color:#000000;font-family:Arial,sans-serif;font-size:14px;line-height:20px;">${content}</td>
+        </tr>`;
+    }
+
+    function buildSignature(data) {
+      const setting = schoolSettings[data.school];
+      const phoneParts = [];
+      if (data.landline) {
+        phoneParts.push(`<a href="tel:${escapeHtml(telHref(data.landline))}" style="text-decoration:none;color:#000000;font-size:14px;">${escapeHtml(data.landline)}</a>`);
+      }
+      if (data.mobile) {
+        phoneParts.push(`<a href="tel:${escapeHtml(telHref(data.mobile))}" style="text-decoration:none;color:#000000;font-size:14px;">${escapeHtml(data.mobile)}</a>`);
+      }
+
+      return `<table cellpadding="0" cellspacing="0" border="0" role="presentation" style="font-size:medium;font-family:Arial,sans-serif;border-collapse:collapse;">
+        <tbody><tr>
+          <td style="vertical-align:top;padding:0;">
+            <img role="presentation" alt="King Edward's Independent Schools" width="130" src="${LOGO_URL}" style="width:130px;max-width:130px;height:auto;display:block;border:0;">
+          </td>
+          <td width="46" aria-label="Spacer" style="width:46px;min-width:46px;padding:0;">&nbsp;</td>
+          <td style="padding:0;vertical-align:middle;font-family:Arial,sans-serif;">
+            <h2 style="margin:0;font-size:18px;font-family:Arial,sans-serif;color:#000000;font-weight:600;line-height:28px;">${escapeHtml(data.firstName)} ${escapeHtml(data.lastName)}</h2>
+            <p style="margin:0;color:#000000;font-family:Arial,sans-serif;font-size:14px;line-height:22px;">${escapeHtml(data.jobTitle)}</p>
+            <div style="margin:0;font-weight:500;color:#000000;font-family:Arial,sans-serif;font-size:14px;line-height:22px;">${escapeHtml(setting.schoolLine)}</div>
+            <p style="margin:0;color:#000000;font-family:Arial,sans-serif;font-size:14px;line-height:22px;">King Edward's Independent Schools</p>
+            <table cellpadding="0" cellspacing="0" border="0" role="presentation" style="width:100%;border-collapse:collapse;"><tbody>
+              <tr><td height="18" style="height:18px;font-size:1px;line-height:1px;">&nbsp;</td></tr>
+              <tr><td style="width:100%;height:1px;border-bottom:1px solid #e0a78c;font-size:1px;line-height:1px;">&nbsp;</td></tr>
+              <tr><td height="18" style="height:18px;font-size:1px;line-height:1px;">&nbsp;</td></tr>
+            </tbody></table>
+            <table cellpadding="0" cellspacing="0" border="0" role="presentation" style="font-family:Arial,sans-serif;line-height:1;border-collapse:collapse;">
+              <tbody>
+                ${phoneParts.length ? contactRow('T', phoneParts.join(' <span style="color:#888888;">|</span> ')) : ''}
+                ${contactRow('@', `<a href="mailto:${escapeHtml(data.email)}" style="text-decoration:none;color:#000000;font-size:14px;">${escapeHtml(data.email)}</a>`)}
+                ${contactRow('W', `<a href="${WEBSITE_URL}" style="text-decoration:none;color:#000000;font-size:14px;">keschools.org.uk</a>`)}
+                ${contactRow('A', `<span style="font-size:14px;color:#000000;">${escapeHtml(data.address)}</span>`)}
+              </tbody>
+            </table>
+          </td>
+        </tr></tbody>
+      </table>`;
+    }
+
+    function generateSignature(showMessage = true) {
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        statusMessage.textContent = 'Please complete the required fields.';
+        statusMessage.className = 'status error';
+        return false;
+      }
+      preview.innerHTML = buildSignature(readForm());
+      if (showMessage) {
+        statusMessage.textContent = 'Signature generated. Check the preview, then select Copy signature.';
+        statusMessage.className = 'status';
+      }
+      return true;
+    }
+
+    function applySchoolDefaults() {
+      const setting = schoolSettings[school.value];
+      landline.value = setting.landline;
+      address.value = setting.address;
+      generateSignature(false);
+    }
+
+    async function copySignature() {
+      if (!generateSignature(false)) return;
+      const html = preview.innerHTML;
+      const plainText = preview.innerText;
+
+      try {
+        if (navigator.clipboard && window.ClipboardItem) {
+          const item = new ClipboardItem({
+            'text/html': new Blob([html], { type: 'text/html' }),
+            'text/plain': new Blob([plainText], { type: 'text/plain' })
+          });
+          await navigator.clipboard.write([item]);
+        } else {
+          const range = document.createRange();
+          range.selectNodeContents(preview);
+          const selection = window.getSelection();
+          selection.removeAllRanges();
+          selection.addRange(range);
+          const copied = document.execCommand('copy');
+          selection.removeAllRanges();
+          if (!copied) throw new Error('Copy command was rejected.');
+        }
+        statusMessage.textContent = 'Signature copied. You can now paste it into Outlook on the web.';
+        statusMessage.className = 'status';
+      } catch (error) {
+        const range = document.createRange();
+        range.selectNodeContents(preview);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        statusMessage.textContent = 'Automatic copying was blocked. The signature has been selected; press Ctrl+C to copy it.';
+        statusMessage.className = 'status error';
+      }
+    }
+
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      generateSignature(true);
+    });
+
+    school.addEventListener('change', applySchoolDefaults);
+    document.getElementById('copySignature').addEventListener('click', copySignature);
+
+
+    document.getElementById('resetForm').addEventListener('click', () => {
+      setTimeout(() => {
+        applySchoolDefaults();
+        statusMessage.textContent = '';
+      }, 0);
+    });
+
+
+    generateSignature(false);
+  </script>
+</body>
+</html>
